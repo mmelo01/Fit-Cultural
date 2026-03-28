@@ -1,4 +1,4 @@
-package com.fitcultural.backend.configs;
+package com.fitcultural.backend.configs.swagger;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;

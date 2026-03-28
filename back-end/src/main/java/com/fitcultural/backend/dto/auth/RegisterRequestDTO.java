@@ -1,4 +1,4 @@
-package dto;
+package com.fitcultural.backend.dto.auth;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 
-public record LoginRequestDTO(
+public record RegisterRequestDTO(
         @Schema(description = "Nome de usuário") @NotBlank String username,
         @Schema(description = "Senha com validação")@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")
         String password,

@@ -1,9 +1,9 @@
 package com.fitcultural.backend.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fitcultural.backend.controllers.LoginController;
-import com.fitcultural.backend.services.LoginService;
-import dto.LoginRequestDTO;
+import com.fitcultural.backend.controllers.AuthController;
+import com.fitcultural.backend.services.UserService;
+import com.fitcultural.backend.dto.auth.RegisterRequestDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +19,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@WebMvcTest(LoginController.class)
+@WebMvcTest(AuthController.class)
 @AutoConfigureMockMvc(addFilters = false) // Abre a porta da segurança para o teste
-public class LoginControllerTest {
+public class AuthControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockitoBean // Novo no Spring Boot 3.4
-    private LoginService loginService;
+    private UserService userService;
 
     private final ObjectMapper objectMapper = new ObjectMapper()
             .registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule())
@@ -36,7 +36,7 @@ public class LoginControllerTest {
     @Test
     @DisplayName("Deve retornar 400 quando a senha não segue o Regex")
     void shouldReturnWrongPassword() throws Exception {
-        LoginRequestDTO requestInvalido = new LoginRequestDTO(
+        RegisterRequestDTO requestInvalido = new RegisterRequestDTO(
                 "gabriel",
                 "123", // Senha curta demais
                 "email@valido.com",

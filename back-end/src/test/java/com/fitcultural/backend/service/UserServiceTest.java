@@ -1,10 +1,10 @@
 package com.fitcultural.backend.service;
 
-import com.fitcultural.backend.mappers.LoginMapper;
-import com.fitcultural.backend.models.LoginEntity;
-import com.fitcultural.backend.repositories.LoginRepository;
-import com.fitcultural.backend.services.LoginService;
-import dto.LoginRequestDTO;
+import com.fitcultural.backend.mappers.UserMapper;
+import com.fitcultural.backend.models.UserEntity;
+import com.fitcultural.backend.repositories.UserRepository;
+import com.fitcultural.backend.services.UserService;
+import com.fitcultural.backend.dto.auth.RegisterRequestDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,42 +18,42 @@ import java.time.LocalDate;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class LoginServiceTest {
+public class UserServiceTest {
 
     @Mock
-    private LoginRepository loginRepository;
+    private UserRepository userRepository;
 
     @Mock
     private PasswordEncoder passwordEncoder;
 
     @Mock
-    private LoginMapper mapper;
+    private UserMapper mapper;
 
     @InjectMocks
-    private LoginService loginService;
+    private UserService userService;
 
     @Test
     @DisplayName("Deve cadastrar um cliente com sucesso encodando a senha")
     void shouldSignInClient() {
         // 1. Simulação do JSON
-        LoginRequestDTO request = new LoginRequestDTO(
+        RegisterRequestDTO request = new RegisterRequestDTO(
                 "gabriel",
                 "Senha@123",
                 "gabriel@email.com",
                 LocalDate.of(2007, 12, 13)
         );
 
-        LoginEntity entity = new LoginEntity(); // Cria uma entidade vazia para simular o mapeamento
+        UserEntity entity = new UserEntity(); // Cria uma entidade vazia para simular o mapeamento
 
         when(mapper.to(request)).thenReturn(entity);
         when(passwordEncoder.encode(request.password())).thenReturn("hash_gerado");
 
         // 2. Method principal, passando o "json" que fizemos la encima para simular
-        loginService.signClient(request);
+        userService.signClient(request);
 
         // 3. verificar se esta tudo conforme esperávamos
         verify(passwordEncoder, times(1)).encode(request.password());
-        verify(loginRepository, times(1)).save(any(LoginEntity.class));
+        verify(userRepository, times(1)).save(any(UserEntity.class));
     }
 
 }
