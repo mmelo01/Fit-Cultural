@@ -48,4 +48,5 @@ public class AuthControllerTest {
                         .content(objectMapper.writeValueAsString(requestInvalido)))
                 .andExpect(status().isBadRequest());
     }
+
 }
