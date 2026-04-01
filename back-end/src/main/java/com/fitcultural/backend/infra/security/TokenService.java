@@ -18,6 +18,7 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
+    //aqui gera um Crachá temporário
     public String generateToken(UserEntity user){
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
@@ -31,6 +32,7 @@ public class TokenService {
         }
     }
 
+    //aqui valida esse crachá, e ele se torna uma chave de acesso para o usuário, logo ele nao vai precisar ficar validando token toda hora.
     public String validateToken(String token){
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);

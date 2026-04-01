@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_user")
@@ -14,11 +15,12 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+//A entity representa a tabela no banco de dados, aqui também já tem algumas validações.
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false, unique = true)
     private String username;

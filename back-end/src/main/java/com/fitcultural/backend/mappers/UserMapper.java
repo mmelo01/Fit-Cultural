@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+//Usamos a biblioteca Mapstruct para mapear DTO'S e entities sem precisar fazer manualmente.
+//(Lembrando que os campos tem quer ter os mesmos nomes e tipos!!!)
 public interface UserMapper {
     UserEntity to(RegisterRequestDTO registerRequestDTO);
 }

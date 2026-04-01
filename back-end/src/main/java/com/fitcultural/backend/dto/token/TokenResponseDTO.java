@@ -1,4 +1,5 @@
 package com.fitcultural.backend.dto.token;
 
-public record TokenResponseDTO(String password, String email, String token) {
+//Response quer dizer 'Resposta', ou seja, esse código é o que envia a resposta para o front-end.
+public record TokenResponseDTO(String token) {
 }

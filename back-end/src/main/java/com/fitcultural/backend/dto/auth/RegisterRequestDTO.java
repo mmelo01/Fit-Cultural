@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 
+//Request quer dizer 'Requisição', ou seja, esse código é o que solicita ao front-end os dados que necessitamos para executar a nossa funcionalidade.
 public record RegisterRequestDTO(
         @Schema(description = "Nome de usuário") @NotBlank String username,
         @Schema(description = "Senha com validação")@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")

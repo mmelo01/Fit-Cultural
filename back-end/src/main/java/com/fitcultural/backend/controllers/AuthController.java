@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
+@Tag(name = "Autenticação", description = "Endpoints para login e registro de usuários")
 public class AuthController {
 
     private final UserService userService;
@@ -29,17 +30,19 @@ public class AuthController {
     @Operation(description = "Criação do cadastro do cliente, visando a segurança.")
     @ApiResponse(responseCode = "201")
     @PostMapping("/auth/sign")
+    //Mandamos um @RequestBody com os dados necessários para o cadastro, e retornamos uma mensagem para o front
     public ResponseEntity<String> registerClient(@RequestBody @Valid RegisterRequestDTO registerRequestDTO) {
         userService.signClient(registerRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body("Usuário cadastrado com sucesso!");
     }
 
-
-    //TODO Eu (gabriel) estava fazendo esse endpoint, não conseguirei terminar agora, então irei continuar depois, mas esta quase pronto.
-    @PostMapping("/auth/login")
-    public ResponseEntity<String> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO){
+    @Operation(summary = "Realiza o login", description = "Recebe e-mail e senha e retorna um token JWT")
+    @ApiResponse(responseCode = "200", description = "Login realizado com sucesso")
+    @ApiResponse(responseCode = "403", description = "Credenciais inválidas")
+    @PostMapping("/login")
+    //Mandamos um @RequestBody com os dados necessários para o login, e retornamos o Token para o front.
+    public ResponseEntity<TokenResponseDTO> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO){
         TokenResponseDTO tokenResponseDTO = userService.loginClient(loginRequestDTO);
-        return null;
+        return ResponseEntity.ok(tokenResponseDTO);
     }
-
 }

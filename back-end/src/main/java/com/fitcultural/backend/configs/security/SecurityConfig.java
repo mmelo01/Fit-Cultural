@@ -1,6 +1,7 @@
 package com.fitcultural.backend.configs.security;
 
 import com.fitcultural.backend.infra.security.SecurityFilter;
+import com.fitcultural.backend.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,10 +16,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+//Aqui é a portaria do nosso projeto, determina quem pode ou não, no caso só o swagger e o endpoint
+//de login, que será quem vai disponibilizar o Token/Crachá para acesso.
 public class SecurityConfig {
 
     @Autowired
     private SecurityFilter securityFilter;
+
+
+    public SecurityConfig(SecurityFilter securityFilter) {
+        this.securityFilter = securityFilter;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
