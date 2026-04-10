@@ -1,15 +1,13 @@
 package com.fitcultural.backend.mappers;
 
-import com.fitcultural.backend.models.UserEntity;
 import com.fitcultural.backend.dto.auth.RegisterRequestDTO;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
+import com.fitcultural.backend.models.UserEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-//Usamos a biblioteca Mapstruct para mapear DTO'S e entities sem precisar fazer manualmente.
-//(Lembrando que os campos tem quer ter os mesmos nomes e tipos!!!)
-public interface UserMapper {
-    UserEntity to(RegisterRequestDTO registerRequestDTO);
+public class UserMapper {
+    public UserEntity to(RegisterRequestDTO dto) {
+        if (dto == null) return null;
+        return new UserEntity(dto.username(), dto.password(), dto.email(), dto.birthDate());
+    }
 }

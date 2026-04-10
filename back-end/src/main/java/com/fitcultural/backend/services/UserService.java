@@ -19,17 +19,13 @@
     @Service
     public class UserService {
 
-        @Autowired
         private final UserRepository userRepository;
-        @Autowired
         private final PasswordEncoder passwordEncoder;
-        @Autowired
         private final UserMapper mapper;
-        @Autowired
-        private AuthenticationManager authenticationManager;
-        @Autowired
-        private TokenService tokenService;
+        private final AuthenticationManager authenticationManager;
+        private final TokenService tokenService;
 
+        @Autowired
         public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper mapper, AuthenticationManager authenticationManager, TokenService tokenService) {
             this.userRepository = userRepository;
             this.passwordEncoder = passwordEncoder;
@@ -40,6 +36,7 @@
 
         //Implementamos uma criptografia no password, após a transformação se torna um código hash.
         public void signClient(RegisterRequestDTO registerRequestDTO) {
+            //TODO implementar back-logs para deixar claro o que esta acontecendo no código, exemplo: Senha nao encontrada, email inexistente, etc
             UserEntity userEntity = mapper.to(registerRequestDTO);
             String hashPassword = passwordEncoder.encode(registerRequestDTO.password());
             userEntity.setPassword(hashPassword);
@@ -48,6 +45,7 @@
 
         //Implementamos uma geração de Token, que garante a segurança do sistema.
         public TokenResponseDTO loginClient(LoginRequestDTO loginRequestDTO) {
+            //TODO implementar back-logs para deixar claro o que esta acontecendo no codigo, exemplo: Senha nao encontrada, email inexistente, etc
             UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(loginRequestDTO.email(), loginRequestDTO.password());
             Authentication authenticate = this.authenticationManager.authenticate(usernamePassword);
             String token = tokenService.generateToken((UserEntity) Objects.requireNonNull(authenticate.getPrincipal()));
