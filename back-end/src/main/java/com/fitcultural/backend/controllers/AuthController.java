@@ -5,6 +5,7 @@ import com.fitcultural.backend.dto.token.TokenResponseDTO;
 import com.fitcultural.backend.services.UserService;
 import com.fitcultural.backend.dto.auth.RegisterRequestDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -26,8 +27,8 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @Tag(name = "Login")
-    @Operation(description = "Criação do cadastro do cliente, visando a segurança.")
+    @Tag(name = "Autenticação")
+    @Operation(summary = "Realiza o cadastro", description = "Criação do cadastro do cliente, visando a segurança.")
     @ApiResponse(responseCode = "201")
     @PostMapping("/auth/sign")
     //Mandamos um @RequestBody com os dados necessários para o cadastro, e retornamos uma mensagem para o front
@@ -36,6 +37,7 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Usuário cadastrado com sucesso!");
     }
 
+    @Tag(name = "Autenticação")
     @Operation(summary = "Realiza o login", description = "Recebe e-mail e senha e retorna um token JWT")
     @ApiResponse(responseCode = "200", description = "Login realizado com sucesso")
     @ApiResponse(responseCode = "403", description = "Credenciais inválidas")
